@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 export class DataService {
   db: any = {
     1000: { "accno": 1000, "username": "Neer", "password": 1000, "balance": 5000 },
-    1001: { "accno": 1001, "username": "akhil", "password": 10001, "balance": 4000 },
-    1002: { "accno": 1002, "username": "anandhu", "password": 10002, "balance": 3000 },
+    1001: { "accno": 1001, "username": "Akhil", "password": 1001, "balance": 4000 },
+    1002: { "accno": 1002, "username": "Anandhu", "password": 1002, "balance": 3000 },
   }
   constructor() { }
   login(acno: any, pswd: any) {
