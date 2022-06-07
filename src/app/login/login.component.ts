@@ -9,27 +9,35 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  aim="Perfect Banking Partner"
-  accno="Account No: / Username "
-  acno=""
-  pswd=""
+  aim = "Perfect Banking Partner"
+  accno = "Account No: / Username "
+  acno = ""
+  pswd = ""
 
-  loginForm= this.fb.group({
-    acno :['',[Validators.required,Validators.pattern('[0-9]*')]],
-    pswd :['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]]
+  loginForm = this.fb.group({
+    acno: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+    pswd: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]]
   })
-  constructor(private router:Router,private ds:DataService,private fb:FormBuilder) { }
+  constructor(private router: Router, private ds: DataService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
-  
-login(){
- var acno=this.loginForm.value.acno
- var pswd=this.loginForm.value.pswd
- const result = this.ds.login(acno,pswd)
-if(result){
 
-    alert("Login Sucessfull")
-    this.router.navigateByUrl('dashboard')
+  login() {
+    var acno = this.loginForm.value.acno
+    var pswd = this.loginForm.value.pswd
+
+    if (this.loginForm.valid) {
+      const result = this.ds.login(acno, pswd)
+      if (result) {
+        alert("Login Sucessfull")
+        this.router.navigateByUrl('dashboard')
+      }
+    }
+    else{
+      alert("Invalid Form")
+    }
+
+  
   }
-}}
+}

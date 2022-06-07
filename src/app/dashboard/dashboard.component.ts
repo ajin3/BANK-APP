@@ -25,30 +25,45 @@ export class DashboardComponent implements OnInit {
 
   })
 
+  user: any
 
-  constructor(private ds:DataService,private fb:FormBuilder) { }
+  constructor(private ds: DataService, private fb: FormBuilder) {
+    this.user = this.ds.currentUser
+  }
 
   ngOnInit(): void {
   }
-  deposit(){
-   var acno=this.depositForm.value.acno
-   var pswd=this.depositForm.value.pswd
-   var amount=this.depositForm.value.amount
+  deposit() {
+    var acno = this.depositForm.value.acno
+    var pswd = this.depositForm.value.pswd
+    var amount = this.depositForm.value.amount
+    if(this.depositForm.valid){
+      const result = this.ds.deposit(acno, pswd, amount)
+      if (result) {
+        alert(amount + "Deposited Successfully and new Balance is: " + result)
+      }
+    }
+    else{
+      alert("Invalid Form")
+    }
+    
+ 
+  }
+  withdraw() {
+    var acno = this.withdrawForm.value.acno
+    var pswd = this.withdrawForm.value.pswd
+    var amount = this.withdrawForm.value.amount
 
-    const result = this.ds.deposit(acno,pswd,amount)
-    if(result){
-      alert(amount+"Deposited Successfully and new Balance is: "+result)
+    if (this.withdrawForm.valid) {
+      const result = this.ds.withdraw(acno, pswd, amount)
+      if (result) {
+        alert(amount + "Debited Successfully and new Balance is: " + result)
+      }
+    }
+
+  
+    else {
+      alert("Invalid Form")
     }
   }
-  withdraw(){
-    var acno=this.withdrawForm.value.acno
-    var pswd=this.withdrawForm.value.pswd
-    var amount=this.withdrawForm.value.amount
- 
-     const result = this.ds.withdraw(acno,pswd,amount)
-     if(result){
-       alert(amount+"Debited Successfully and new Balance is: "+result)
-     }
-  }
-
 }

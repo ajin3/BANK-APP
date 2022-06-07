@@ -4,17 +4,34 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DataService {
+  currentUser:any
   db: any = {
-    1000: { "accno": 1000, "username": "Neer", "password": 1000, "balance": 5000 },
+    1000: { "accno": 1000, "username": "Ajin", "password": 1000, "balance": 5000 },
     1001: { "accno": 1001, "username": "Akhil", "password": 1001, "balance": 4000 },
     1002: { "accno": 1002, "username": "Anandhu", "password": 1002, "balance": 3000 },
   }
   constructor() { }
+
+  saveDetails(){
+    if(this.db){
+      localStorage.setItem("database",JSON.stringify(this.db))
+    }
+    if(this.currentUser){
+      localStorage.setItem("currentUser",JSON.stringify(this.currentUser))
+    }
+  }
+
+
+
+
   login(acno: any, pswd: any) {
 
     let db = this.db
+
     if (acno in db) {
       if (pswd == db[acno]["password"]) {
+        this.currentUser = db[acno]["username"]
+        this.saveDetails()
         return true
       }
       else {
@@ -39,6 +56,7 @@ export class DataService {
         "balance": 0
       }
       console.log(db);
+      this.saveDetails()
     return true
   }
 }
@@ -48,6 +66,7 @@ export class DataService {
     if(acno in db){
       if(password==db[acno]["password"]){
         db[acno]["balance"]+=amount
+        this.saveDetails()
         return db[acno]["balance"]
       }
       else{
@@ -61,6 +80,7 @@ else{
 
 }
   }
+
   withdraw(acno:any,password:any,amt:any){
     var amount=parseInt(amt)
     let db=this.db
@@ -70,6 +90,7 @@ else{
         if ( db[acno]["balance"]>amount) {
 
           db[acno]["balance"]-=amount
+          this.saveDetails()
           return db[acno]["balance"]
           
         }
