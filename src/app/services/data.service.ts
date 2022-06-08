@@ -6,11 +6,21 @@ import { Injectable } from '@angular/core';
 export class DataService {
   currentUser:any
   db: any = {
-    1000: { "accno": 1000, "username": "Ajin", "password": 1000, "balance": 5000 },
-    1001: { "accno": 1001, "username": "Akhil", "password": 1001, "balance": 4000 },
-    1002: { "accno": 1002, "username": "Anandhu", "password": 1002, "balance": 3000 },
+    1000: { "accno": 1000, "username": "Ajin", "password": 1000, "balance": 5000, transaction:[] },
+    1001: { "accno": 1001, "username": "Akhil", "password": 1001, "balance": 4000, transaction:[] },
+    1002: { "accno": 1002, "username": "Anandhu", "password": 1002, "balance": 3000, transaction:[] }
   }
-  constructor() { }
+  constructor() { 
+    this.getDetails()
+  }
+  getDetails(){
+    if(localStorage.getItem("database")){
+      this.db =JSON.parse(localStorage.getItem("database")|| '')
+    }
+    if(localStorage.getItem("currentUser")){
+      this.currentUser =JSON.parse(localStorage.getItem("currentUser")|| '')
+    }
+  }
 
   saveDetails(){
     if(this.db){
@@ -46,6 +56,7 @@ export class DataService {
   }
   register(username: any, acno: any, password: any) {
     let db = this.db
+
     if (acno in db) {
       return false
     }
@@ -53,7 +64,8 @@ export class DataService {
       db[acno] = {
         acno, username,
         password,
-        "balance": 0
+        "balance": 0,
+        transaction:[]
       }
       console.log(db);
       this.saveDetails()
@@ -66,6 +78,10 @@ export class DataService {
     if(acno in db){
       if(password==db[acno]["password"]){
         db[acno]["balance"]+=amount
+        db[acno].transaction.push({
+          type:"CREDIT",
+          amount:amount
+        })
         this.saveDetails()
         return db[acno]["balance"]
       }
@@ -90,6 +106,10 @@ else{
         if ( db[acno]["balance"]>amount) {
 
           db[acno]["balance"]-=amount
+          db[acno].transaction.push({
+            type:"DEBIT",
+            amount:amount
+          })
           this.saveDetails()
           return db[acno]["balance"]
           
