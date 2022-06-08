@@ -16,14 +16,11 @@
           </tr>
       </thead>
       <tbody>
-        <tr>
-            <th>Credit</th>&nbsp;
-            <th>1000</th>
+        <tr *ngFor="let transaction of transactions">
+            <th>{{transaction.type}}</th>&nbsp;
+            <th>{{transaction.amount}}</th>
         </tr>  
-        <tr>
-            <th>Debit</th>&nbsp;
-            <th>1000</th>
-        </tr>
+       
       </tbody>
   </table>
   <br>

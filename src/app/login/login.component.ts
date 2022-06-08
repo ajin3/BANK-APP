@@ -9,8 +9,8 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  aim = "Perfect Banking Partner"
-  accno = "Account No: / Username "
+  aim = "Your Perfect Banking Partner"
+  accno = "Account Number"
   acno = ""
   pswd = ""
 
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const result = this.ds.login(acno, pswd)
       if (result) {
-        alert("Login Sucessfull")
+        alert("Login Successfull")
         this.router.navigateByUrl('dashboard')
       }
     }
