@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,11 +8,11 @@ export class DataService {
   currentUser: any
   currentAcno: any
   db: any = {
-    1000: { "accno": 1000, "username": "Ajin", "password": 1000, "balance": 5000, transaction: [] },
-    1001: { "accno": 1001, "username": "Akhil", "password": 1001, "balance": 4000, transaction: [] },
-    1002: { "accno": 1002, "username": "Anandhu", "password": 1002, "balance": 3000, transaction: [] }
+    1000: { "acno": 1000, "username": "Ajin", "password": 1000, "balance": 5000, transaction: [] },
+    1001: { "acno": 1001, "username": "Akhil", "password": 1001, "balance": 4000, transaction: [] },
+    1002: { "acno": 1002, "username": "Anandhu", "password": 1002, "balance": 3000, transaction: [] }
   }
-  constructor() {
+  constructor(private http:HttpClient) {
     this.getDetails()
   }
 
@@ -63,24 +64,21 @@ export class DataService {
       return false
     }
   }
-  register(username: any, acno: any, password: any) {
-    let db = this.db
 
-    if (acno in db) {
-      return false
+  //register
+
+  register(username: any, acno: any, password: any) {
+    const data={
+      username,
+      acno,
+      password
+
     }
-    else {
-      db[acno] = {
-        acno, username,
-        password,
-        "balance": 0,
-        transaction: []
-      }
-      console.log(db);
-      this.saveDetails()
-      return true
-    }
+   return this.http.post('http://localhost:3000/register',data)
   }
+
+  //deposit
+
   deposit(acno: any, password: any, amt: any) {
     var amount = parseInt(amt)
     let db = this.db
@@ -105,6 +103,8 @@ export class DataService {
 
     }
   }
+
+  //withdraw
 
   withdraw(acno: any, password: any, amt: any) {
     var amount = parseInt(amt)
