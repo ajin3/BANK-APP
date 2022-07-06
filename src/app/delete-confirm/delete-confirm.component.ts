@@ -12,6 +12,9 @@ export class DeleteConfirmComponent implements OnInit {
  @Input() item:string|undefined
 
  @Output() onCancel=new EventEmitter()
+
+ @Output() onDelete=new EventEmitter()
+
   constructor() { 
     
     
@@ -21,6 +24,9 @@ export class DeleteConfirmComponent implements OnInit {
   }
   cancel(){
     this.onCancel.emit()
+  }
+  delete(){
+    this.onDelete.emit(this.item)
   }
 
 

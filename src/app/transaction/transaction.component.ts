@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -13,7 +14,13 @@ export class TransactionComponent implements OnInit {
 
   constructor(private ds:DataService) {
     this.transactions = this.ds.getTransaction(this.acno)
-    console.log(this.transactions);
+    .subscribe((result:any)=>{
+      this.transactions = result.transaction
+    },
+    (result)=>{
+      alert(result.error.message)
+    }
+    )
     
    }
 

@@ -15,7 +15,7 @@
 
 
 
-  <app-delete-confirm (onCancel)="cancel()" [item] ="acno" ></app-delete-confirm>
+  <app-delete-confirm (onDelete)= "onDelete($event)" (onCancel)="cancel()" [item] ="acno" ></app-delete-confirm>
 <!--<app-animation-demo></app-animation-demo>-->
 
  
